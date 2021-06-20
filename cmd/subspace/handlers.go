@@ -18,19 +18,19 @@ import (
 	qrcode "github.com/skip2/go-qrcode"
 )
 
-func getEnv(key, fallback string) string {
-	if value, ok := os.LookupEnv(key); ok {
-		return value
-	}
-	return fallback
-}
-
 var (
 	validEmail    = regexp.MustCompile(`^[ -~]+@[ -~]+$`)
 	validPassword = regexp.MustCompile(`^[ -~]{6,200}$`)
 	validString   = regexp.MustCompile(`^[ -~]{1,200}$`)
 	maxProfiles   = 250
 )
+
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
+}
 
 // Handles the sign in part separately from the SAML
 func ssoHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {

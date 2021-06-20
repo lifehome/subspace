@@ -170,7 +170,7 @@ func WebHandler(h func(*Web), section string) httprouter.Handle {
 		}
 
 		if !config.FindInfo().Configured {
-			web.Redirect("/configure")
+			web.Redirect(backlink + "/configure")
 			return
 		}
 
@@ -243,7 +243,7 @@ func WebHandler(h func(*Web), section string) httprouter.Handle {
 		}
 
 		logger.Warnf("auth: sign in required")
-		web.Redirect("/signin")
+		web.Redirect(backlink + "/signin")
 	}
 }
 
@@ -304,7 +304,7 @@ func (w *Web) SignoutSession() {
 		http.SetCookie(w.w, &http.Cookie{
 			Name:     SessionCookieNameSSO,
 			Value:    "",
-			Path:     "/",
+			Path:     backlink + "/",
 			HttpOnly: true,
 			Domain:   httpHost,
 			Secure:   !httpInsecure,
@@ -315,7 +315,7 @@ func (w *Web) SignoutSession() {
 	http.SetCookie(w.w, &http.Cookie{
 		Name:     SessionCookieName,
 		Value:    "",
-		Path:     "/",
+		Path:     backlink + "/",
 		HttpOnly: true,
 		Domain:   httpHost,
 		Secure:   !httpInsecure,
@@ -339,7 +339,7 @@ func (w *Web) SigninSession(admin bool, userID string) error {
 	http.SetCookie(w.w, &http.Cookie{
 		Name:     SessionCookieName,
 		Value:    encoded,
-		Path:     "/",
+		Path:     backlink + "/",
 		HttpOnly: true,
 		Domain:   httpHost,
 		Secure:   !httpInsecure,

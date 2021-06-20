@@ -224,10 +224,13 @@ func main() {
 		if httpPort == "80" {
 			hostport = httpHost
 		}
+		if len(httpIP) == 0 {
+		  hostport = "[::]:" + httpPort
+		}
 		logger.Infof("Subspace version: %s %s", version, &url.URL{
 			Scheme: "http",
 			Host:   hostport,
-			Path:   httpPrefix,
+			Path:   backlink,
 		})
 		logger.Fatal(httpd.ListenAndServe())
 	}
@@ -314,6 +317,9 @@ func main() {
 	hostport := net.JoinHostPort(httpHost, httpPort)
 	if httpPort == "443" {
 		hostport = httpHost
+	}
+	if len(httpIP) == 0 {
+		hostport = "[::]:" + httpPort
 	}
 	logger.Infof("Subspace version: %s %s", version, &url.URL{
 		Scheme: "https",

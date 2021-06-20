@@ -125,7 +125,7 @@ $ subspace --http-host subspace.example.com
 | `SUBSPACE_IPV4_NAT_ENABLED` | `true`              | Whether to enable NAT routing for IPv4                                                                                                               |
 | `SUBSPACE_IPV6_NAT_ENABLED` | `true`              | Whether to enable NAT routing for IPv6                                                                                                               |
 | `SUBSPACE_THEME`            | `green`             | The theme to use, please refer to [semantic-ui](https://semantic-ui.com/usage/theming.html) for accepted colors                                      |
-| `SUBSPACE_URL_SUBDIRECTORY`         | `/`                 | The subdirectory that runs `subspace` |
+| `SUBSPACE_URL_SUBDIRECTORY`         | ``                 | The subdirectory that runs `subspace` |
 | `SUBSPACE_DISABLE_DNS`      | `false`             | Whether to disable DNS so the client uses their own configured DNS server(s). Consider disabling DNS server, if supporting international VPN clients |
 
 ### Run as a Docker container

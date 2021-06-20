@@ -5,17 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <meta name="referrer" content="origin">
-        <link rel="icon" href="/static/favicon.png?v={{$.Version}}">
-        <link rel="apple-touch-icon" href="/static/favicon.png?v={{$.Version}}">
+        <link rel="icon" href="{{.Backlink}}/static/favicon.png?v={{$.Version}}">
+        <link rel="apple-touch-icon" href="{{.Backlink}}/static/favicon.png?v={{$.Version}}">
 
         <title>Subspace</title>
 
-        <link rel="stylesheet" type="text/css" href="/static/semantic/semantic.min.css?v={{$.Version}}">
-        <link rel="stylesheet" type="text/css" href="/static/style.css?v={{$.Version}}">
-        <link rel="stylesheet" type="text/css" href="/static/roboto.css?v={{$.Version}}">
+        <link rel="stylesheet" type="text/css" href="{{.Backlink}}/static/semantic/semantic.min.css?v={{$.Version}}">
+        <link rel="stylesheet" type="text/css" href="{{.Backlink}}/static/style.css?v={{$.Version}}">
+        <link rel="stylesheet" type="text/css" href="{{.Backlink}}/static/roboto.css?v={{$.Version}}">
 
-        <script src="/static/jquery.min.js?v={{$.Version}}"></script>
-        <script src="/static/semantic/semantic.min.js?v={{$.Version}}"></script>
+        <script src="{{.Backlink}}/static/jquery.min.js?v={{$.Version}}"></script>
+        <script src="{{.Backlink}}/static/semantic/semantic.min.js?v={{$.Version}}"></script>
     </head>
     <body>
 
@@ -24,9 +24,9 @@
                 {{if $.Backlink}}
                     <a class="item" href="{{.Backlink}}"><i class="home icon"></i></a>
                 {{end}}
-                <a href="/" class="{{if eq $.Section "index"}}active{{end}} item">Subspace</a>
+                <a href="{{.Backlink}}/" class="{{if eq $.Section "index"}}active{{end}} item">Subspace</a>
                 {{if $.Admin}}
-                    <a href="/settings" class="{{if eq $.Section "settings"}}active{{end}} item">Settings</a>
+                    <a href="{{.Backlink}}/settings" class="{{if eq $.Section "settings"}}active{{end}} item">Settings</a>
                 {{end}}
 
                 {{if eq $.Section "signin" "forgot"}}
@@ -40,8 +40,8 @@
                         {{end}}
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a href="/help" class="{{if eq $.Section "help"}}active{{end}} item"><i class="help icon"></i>Help</a>
-                            <a href="/signout" class="item confirm" data-prompt="Sign out?"><i class="sign out icon"></i>Sign out</a>
+                            <a href="{{.Backlink}}/help" class="{{if eq $.Section "help"}}active{{end}} item"><i class="help icon"></i>Help</a>
+                            <a href="{{.Backlink}}/signout" class="item confirm" data-prompt="Sign out?"><i class="sign out icon"></i>Sign out</a>
                         </div>
                     </div>
                 {{end}}

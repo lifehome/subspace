@@ -1,7 +1,7 @@
 {{template "header.html" .}}
 
 <div class="ui container">
-    <a href="/" class="ui large basic button"><i class="long arrow alternate left icon"></i>Back</a>
+    <a href="{{.Backlink}}/" class="ui large basic button"><i class="long arrow alternate left icon"></i>Back</a>
     <div class="ui hidden divider"></div>
 
     {{with $success := $.Request.FormValue "success"}}
@@ -14,7 +14,7 @@
                         {{$success}}
                     {{end}}
                 </div>
-                <a class="close-link" href="/profile/connect/{{$.Profile.ID}}"><i class="close icon"></i></a>
+                <a class="close-link" href="{{.Backlink}}/profile/connect/{{$.Profile.ID}}"><i class="close icon"></i></a>
             </div>
         </div>
         <div class="ui hidden divider"></div>
@@ -39,7 +39,7 @@
                     <i class="right triangle icon"></i>
                     <div class="content">
                         <div class="description">
-                            <a href="/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a> and import it into WireGuard
+                            <a href="{{.Backlink}}/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a> and import it into WireGuard
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                     <i class="right triangle icon"></i>
                     <div class="content">
                         <div class="description">
-                            <a href="/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a> into your Downloads folder
+                            <a href="{{.Backlink}}/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a> into your Downloads folder
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                     <i class="right triangle icon"></i>
                     <div class="content">
                         <div class="description">
-                            <a href="/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a> and open with WireGuard or use the QR code below
+                            <a href="{{.Backlink}}/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a> and open with WireGuard or use the QR code below
                         </div>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
             </div>
 
             <div class="ui hidden divider"></div>
-            <img class="ui centered medium image" src="/profile/qrconfig/wireguard/{{$.Profile.ID}}" alt="qr-code could not be displayed">
+            <img class="ui centered medium image" src="{{.Backlink}}/profile/qrconfig/wireguard/{{$.Profile.ID}}" alt="qr-code could not be displayed">
 
         {{else if eq $.Profile.Platform "android"}}
             <div class="ui large header"><i class="android icon"></i> Android &mdash; Instructions</div>
@@ -159,7 +159,7 @@
                     <i class="right triangle icon"></i>
                     <div class="content">
                         <div class="description">
-                            <a href="/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a> or use the QR code below
+                            <a href="{{.Backlink}}/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a> or use the QR code below
                         </div>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
             </div>
 
             <div class="ui hidden divider"></div>
-            <img class="ui centered medium image" src="/profile/qrconfig/wireguard/{{$.Profile.ID}}" alt="qr-code could not be displayed">
+            <img class="ui centered medium image" src="{{.Backlink}}/profile/qrconfig/wireguard/{{$.Profile.ID}}" alt="qr-code could not be displayed">
 
         {{else if eq $.Profile.Platform "linux"}}
             <div class="ui large header"><i class="linux icon"></i> Linux &mdash; Instructions</div>
@@ -191,7 +191,7 @@
                     <i class="right triangle icon"></i>
                     <div class="content">
                         <div class="description">
-                            <a href="/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a>
+                            <a href="{{.Backlink}}/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a>
                         </div>
                     </div>
                 </div>
@@ -219,7 +219,7 @@
                     <i class="right triangle icon"></i>
                     <div class="content">
                         <div class="description">
-                            <a href="/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a>
+                            <a href="{{.Backlink}}/profile/config/wireguard/{{$.Profile.ID}}">Download your WireGuard config</a>
                         </div>
                     </div>
                 </div>

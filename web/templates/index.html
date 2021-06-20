@@ -13,7 +13,7 @@
                     User deleted successfully
                 {{end}}
             </div>
-            <a class="close-link" href="{{$.SubDirectory}}"><i class="close icon"></i></a>
+            <a class="close-link" href="{{$.SubDirectory}}/"><i class="close icon"></i></a>
         </div>
     {{end}}
     {{with $error := $.Request.FormValue "error"}}
@@ -30,7 +30,7 @@
                         {{$error}}
                     {{end}}
                 </div>
-                <a class="close-link" href="{{$.SubDirectory}}"><i class="close icon"></i></a>
+                <a class="close-link" href="{{$.SubDirectory}}/"><i class="close icon"></i></a>
             </div>
         </div>
         <div class="ui hidden divider"></div>

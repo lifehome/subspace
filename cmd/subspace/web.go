@@ -164,13 +164,13 @@ func WebHandler(h func(*Web), section string) httprouter.Handle {
 			TempTotpKey:   tempTotpKey,
 		}
 
-		if section == "signin" || section == "forgot" || section == "configure" {
-			h(web)
+		if !config.FindInfo().Configured {
+			web.Redirect(backlink + "/configure")
 			return
 		}
 
-		if !config.FindInfo().Configured {
-			web.Redirect(backlink + "/configure")
+		if section == "signin" || section == "forgot" || section == "configure" {
+			h(web)
 			return
 		}
 

@@ -24,7 +24,7 @@
                 {{if $.Backlink}}
                     <a class="item" href="{{$.Backlink}}"><i class="home icon"></i></a>
                 {{end}}
-                <a href="{{$.Backlink}}/" class="{{if eq $.Section "index"}}active{{end}} item">Subspace</a>
+                <a href="{{$.Backlink}}" class="{{if eq $.Section "index"}}active{{end}} item">Subspace</a>
                 {{if $.Admin}}
                     <a href="{{$.Backlink}}/settings" class="{{if eq $.Section "settings"}}active{{end}} item">Settings</a>
                 {{end}}

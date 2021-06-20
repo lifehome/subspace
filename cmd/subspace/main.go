@@ -168,6 +168,8 @@ func main() {
 	// Routes
 	//
 	r := &httprouter.Router{}
+
+	r.GET(backlink, Log(WebHandler(rootIndexHandler, "index")))
 	r.GET(backlink + "/", Log(WebHandler(indexHandler, "index")))
 	r.GET(backlink + "/help", Log(WebHandler(helpHandler, "help")))
 	r.GET(backlink + "/configure", Log(WebHandler(configureHandler, "configure")))
@@ -383,7 +385,7 @@ func configureSAML() error {
 	rootURL := url.URL{
 		Scheme: "https",
 		Host:   httpHost,
-		Path:   backlink + "/",
+		Path:   backlink,
 	}
 
 	if httpInsecure {

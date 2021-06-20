@@ -36,7 +36,7 @@ var (
 func ssoHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	session, err := samlSP.Session.GetSession(r)
 	if session != nil {
-		http.Redirect(w, r, backlink + "/", http.StatusFound)
+		http.Redirect(w, r, backlink, http.StatusFound)
 		return
 	}
 	if err == samlsp.ErrNoSession {
@@ -227,7 +227,7 @@ func forgotHandler(w *Web) {
 		Error(w.w, err)
 		return
 	}
-	w.Redirect(backlink + "/")
+	w.Redirect(backlink)
 }
 
 func signoutHandler(w *Web) {
@@ -266,7 +266,7 @@ func signinHandler(w *Web) {
 		return
 	}
 
-	w.Redirect(backlink + "/")
+	w.Redirect(backlink)
 }
 
 func totpQRHandler(w *Web) {
@@ -581,6 +581,10 @@ func profileDeleteHandler(w *Web) {
 }
 
 func indexHandler(w *Web) {
+	w.Redirect(backlink)
+}
+
+func rootIndexHandler(w *Web) {
 	if w.User.ID != "" {
 		w.TargetProfiles = config.ListProfilesByUser(w.User.ID)
 	}

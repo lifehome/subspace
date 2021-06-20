@@ -13,7 +13,7 @@
                     User deleted successfully
                 {{end}}
             </div>
-            <a class="close-link" href="{{$.Backlink}}"><i class="close icon"></i></a>
+            <a class="close-link" href="{{$.SubDirectory}}"><i class="close icon"></i></a>
         </div>
     {{end}}
     {{with $error := $.Request.FormValue "error"}}
@@ -30,7 +30,7 @@
                         {{$error}}
                     {{end}}
                 </div>
-                <a class="close-link" href="{{$.Backlink}}"><i class="close icon"></i></a>
+                <a class="close-link" href="{{$.SubDirectory}}"><i class="close icon"></i></a>
             </div>
         </div>
         <div class="ui hidden divider"></div>
@@ -47,7 +47,7 @@
                 <div class="ui hidden divider"></div>
             </div>
             <div class="column">
-                <form class="ui huge form" action="{{$.Backlink}}/profile/add" method="POST">
+                <form class="ui huge form" action="{{$.SubDirectory}}/profile/add" method="POST">
                     <div class="field">
                         <input name="name" type="text" value="{{$.Request.FormValue "name"}}" placeholder="Device name" autofocus>
                     </div>
@@ -104,7 +104,7 @@
                 <div class="ui three stackable cards">
                     {{range $n, $p := $.TargetProfiles}}
                         <div class="showcard card">
-                            <a href="{{$.Backlink}}/profile/delete/{{$p.ID}}" class="ui right corner label "><i class="trash alternate icon"></i></a>
+                            <a href="{{$.SubDirectory}}/profile/delete/{{$p.ID}}" class="ui right corner label "><i class="trash alternate icon"></i></a>
                             <div class="content">
                                 <div class="header">
                                     <i class="large grey
@@ -140,7 +140,7 @@
                                 </div>
                             </div>
                             <div class="extra content">
-                                <a href="{{$.Backlink}}/profile/connect/{{$p.ID}}" class="ui large basic fluid button">Connect device</a>
+                                <a href="{{$.SubDirectory}}/profile/connect/{{$p.ID}}" class="ui large basic fluid button">Connect device</a>
                             </div>
                         </div>
                     {{end}}
@@ -164,7 +164,7 @@
                 <div class="ui three stackable cards">
                     {{range $n, $p := $.Profiles}}
                         <div class="showcard card">
-                            <a href="{{$.Backlink}}/profile/delete/{{$p.ID}}" class="ui right corner label "><i class="trash alternate icon"></i></a>
+                            <a href="{{$.SubDirectory}}/profile/delete/{{$p.ID}}" class="ui right corner label "><i class="trash alternate icon"></i></a>
                             <div class="content">
                                 <div class="header">
                                     <i class="large grey
@@ -200,7 +200,7 @@
                                 </div>
                             </div>
                             <div class="extra content">
-                                <a href="{{$.Backlink}}/profile/connect/{{$p.ID}}" class="ui large basic fluid button">Connect device</a>
+                                <a href="{{$.SubDirectory}}/profile/connect/{{$p.ID}}" class="ui large basic fluid button">Connect device</a>
                             </div>
                         </div>
                     {{end}}
@@ -222,7 +222,7 @@
             <div class="ui three stackable cards">
                 {{range $n, $u := $.Users}}
                     <div class="showcard card">
-                        <a href="{{$.Backlink}}/user/delete/{{$u.ID}}" class="ui right corner label "><i class="trash alternate icon"></i></a>
+                        <a href="{{$.SubDirectory}}/user/delete/{{$u.ID}}" class="ui right corner label "><i class="trash alternate icon"></i></a>
                         <div class="content">
                             <div class="header">
                                 <i class="large grey user icon"></i>
@@ -256,7 +256,7 @@
                             </div>
                         </div>
                         <div class="extra content">
-                            <a href="{{$.Backlink}}/user/edit/{{$u.ID}}" class="ui large basic fluid button">Manage user</a>
+                            <a href="{{$.SubDirectory}}/user/edit/{{$u.ID}}" class="ui large basic fluid button">Manage user</a>
                         </div>
                     </div>
                 {{end}}

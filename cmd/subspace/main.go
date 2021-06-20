@@ -45,8 +45,8 @@ var (
 	// Insecure http cookies (only recommended for internal LANs/VPNs)
 	httpInsecure bool
 
-	// backlink
-	backlink string
+	// subdir
+	subdir string
 
 	// show version
 	showVersion bool
@@ -87,7 +87,7 @@ var (
 
 func init() {
 	cli.StringVar(&datadir, "datadir", "/data", "data dir")
-	cli.StringVar(&backlink, "backlink", "", "backlink, without trailing slash (optional)")
+	cli.StringVar(&subdir, "subdir", "", "subdir, without trailing slash (optional)")
 	cli.StringVar(&httpHost, "http-host", "", "HTTP host")
 	cli.StringVar(&httpAddr, "http-addr", ":80", "HTTP listen address")
 	cli.BoolVar(&httpInsecure, "http-insecure", false, "enable sessions cookies for http (no https) not recommended")
@@ -169,42 +169,42 @@ func main() {
 	//
 	r := &httprouter.Router{}
 
-	r.GET(backlink, Log(WebHandler(rootIndexHandler, "index")))
-	r.GET(backlink + "/", Log(WebHandler(indexHandler, "index")))
-	r.GET(backlink + "/help", Log(WebHandler(helpHandler, "help")))
-	r.GET(backlink + "/configure", Log(WebHandler(configureHandler, "configure")))
-	r.POST(backlink + "/configure", Log(WebHandler(configureHandler, "configure")))
+	r.GET(subdir, Log(WebHandler(rootIndexHandler, "index")))
+	r.GET(subdir+"/", Log(WebHandler(indexHandler, "index")))
+	r.GET(subdir+"/help", Log(WebHandler(helpHandler, "help")))
+	r.GET(subdir+"/configure", Log(WebHandler(configureHandler, "configure")))
+	r.POST(subdir+"/configure", Log(WebHandler(configureHandler, "configure")))
 
 	// SAML
-	r.GET(backlink + "/sso", Log(ssoHandler))
-	r.GET(backlink + "/saml/metadata", Log(samlHandler))
-	r.POST(backlink + "/saml/metadata", Log(samlHandler))
-	r.GET(backlink + "/saml/acs", Log(samlHandler))
-	r.POST(backlink + "/saml/acs", Log(samlHandler))
+	r.GET(subdir+"/sso", Log(ssoHandler))
+	r.GET(subdir+"/saml/metadata", Log(samlHandler))
+	r.POST(subdir+"/saml/metadata", Log(samlHandler))
+	r.GET(subdir+"/saml/acs", Log(samlHandler))
+	r.POST(subdir+"/saml/acs", Log(samlHandler))
 
-	r.GET(backlink + "/totp/image", Log(WebHandler(totpQRHandler, "totp/image")))
-	r.GET(backlink + "/signin", Log(WebHandler(signinHandler, "signin")))
-	r.GET(backlink + "/signout", Log(WebHandler(signoutHandler, "signout")))
-	r.POST(backlink + "/signin", Log(WebHandler(signinHandler, "signin")))
-	r.GET(backlink + "/forgot", Log(WebHandler(forgotHandler, "forgot")))
-	r.POST(backlink + "/forgot", Log(WebHandler(forgotHandler, "forgot")))
+	r.GET(subdir+"/totp/image", Log(WebHandler(totpQRHandler, "totp/image")))
+	r.GET(subdir+"/signin", Log(WebHandler(signinHandler, "signin")))
+	r.GET(subdir+"/signout", Log(WebHandler(signoutHandler, "signout")))
+	r.POST(subdir+"/signin", Log(WebHandler(signinHandler, "signin")))
+	r.GET(subdir+"/forgot", Log(WebHandler(forgotHandler, "forgot")))
+	r.POST(subdir+"/forgot", Log(WebHandler(forgotHandler, "forgot")))
 
-	r.GET(backlink + "/settings", Log(WebHandler(settingsHandler, "settings")))
-	r.POST(backlink + "/settings", Log(WebHandler(settingsHandler, "settings")))
+	r.GET(subdir+"/settings", Log(WebHandler(settingsHandler, "settings")))
+	r.POST(subdir+"/settings", Log(WebHandler(settingsHandler, "settings")))
 
-	r.GET(backlink + "/user/edit/:user", Log(WebHandler(userEditHandler, "user/edit")))
-	r.POST(backlink + "/user/edit", Log(WebHandler(userEditHandler, "user/edit")))
-	r.GET(backlink + "/user/delete/:user", Log(WebHandler(userDeleteHandler, "user/delete")))
-	r.POST(backlink + "/user/delete", Log(WebHandler(userDeleteHandler, "user/delete")))
+	r.GET(subdir+"/user/edit/:user", Log(WebHandler(userEditHandler, "user/edit")))
+	r.POST(subdir+"/user/edit", Log(WebHandler(userEditHandler, "user/edit")))
+	r.GET(subdir+"/user/delete/:user", Log(WebHandler(userDeleteHandler, "user/delete")))
+	r.POST(subdir+"/user/delete", Log(WebHandler(userDeleteHandler, "user/delete")))
 
-	r.GET(backlink + "/profile/add", Log(WebHandler(profileAddHandler, "profile/add")))
-	r.POST(backlink + "/profile/add", Log(WebHandler(profileAddHandler, "profile/add")))
-	r.GET(backlink + "/profile/connect/:profile", Log(WebHandler(profileConnectHandler, "profile/connect")))
-	r.GET(backlink + "/profile/delete/:profile", Log(WebHandler(profileDeleteHandler, "profile/delete")))
-	r.POST(backlink + "/profile/delete", Log(WebHandler(profileDeleteHandler, "profile/delete")))
-	r.GET(backlink + "/profile/config/wireguard/:profile", Log(WebHandler(wireguardConfigHandler, "profile/config/wireguard")))
-	r.GET(backlink + "/profile/qrconfig/wireguard/:profile", Log(WebHandler(wireguardQRConfigHandler, "profile/qrconfig/wireguard")))
-	r.GET(backlink + "/static/*path", staticHandler)
+	r.GET(subdir+"/profile/add", Log(WebHandler(profileAddHandler, "profile/add")))
+	r.POST(subdir+"/profile/add", Log(WebHandler(profileAddHandler, "profile/add")))
+	r.GET(subdir+"/profile/connect/:profile", Log(WebHandler(profileConnectHandler, "profile/connect")))
+	r.GET(subdir+"/profile/delete/:profile", Log(WebHandler(profileDeleteHandler, "profile/delete")))
+	r.POST(subdir+"/profile/delete", Log(WebHandler(profileDeleteHandler, "profile/delete")))
+	r.GET(subdir+"/profile/config/wireguard/:profile", Log(WebHandler(wireguardConfigHandler, "profile/config/wireguard")))
+	r.GET(subdir+"/profile/qrconfig/wireguard/:profile", Log(WebHandler(wireguardQRConfigHandler, "profile/qrconfig/wireguard")))
+	r.GET(subdir+"/static/*path", staticHandler)
 
 	//
 	// Server
@@ -227,12 +227,12 @@ func main() {
 			hostport = httpHost
 		}
 		if len(httpIP) == 0 {
-		  hostport = "[::]:" + httpPort
+			hostport = "[::]:" + httpPort
 		}
 		logger.Infof("Subspace version: %s %s", version, &url.URL{
 			Scheme: "http",
 			Host:   hostport,
-			Path:   backlink,
+			Path:   subdir,
 		})
 		logger.Fatal(httpd.ListenAndServe())
 	}
@@ -258,7 +258,7 @@ func main() {
 	// http redirect to https and Let's Encrypt auth
 	go func() {
 		redir := httprouter.New()
-		redir.GET(backlink + "/*path", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		redir.GET(subdir+"/*path", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 			r.URL.Scheme = "https"
 			r.URL.Host = httpHost
 			http.Redirect(w, r, r.URL.String(), http.StatusFound)
@@ -326,7 +326,7 @@ func main() {
 	logger.Infof("Subspace version: %s %s", version, &url.URL{
 		Scheme: "https",
 		Host:   hostport,
-		Path:   backlink,
+		Path:   subdir,
 	})
 	logger.Fatal(httpsd.Serve(tlsListener))
 }
@@ -385,7 +385,7 @@ func configureSAML() error {
 	rootURL := url.URL{
 		Scheme: "https",
 		Host:   httpHost,
-		Path:   backlink,
+		Path:   subdir,
 	}
 
 	if httpInsecure {

@@ -36,7 +36,7 @@ func getEnv(key, fallback string) string {
 func ssoHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	session, err := samlSP.Session.GetSession(r)
 	if session != nil {
-		http.Redirect(w, r, backlink, http.StatusFound)
+		http.Redirect(w, r, subdir, http.StatusFound)
 		return
 	}
 	if err == samlsp.ErrNoSession {
@@ -120,7 +120,7 @@ func wireguardConfigHandler(w *Web) {
 
 func configureHandler(w *Web) {
 	if config.FindInfo().Configured {
-		w.Redirect(backlink + "?error=configured")
+		w.Redirect(subdir + "?error=configured")
 		return
 	}
 
@@ -134,13 +134,13 @@ func configureHandler(w *Web) {
 	password := w.r.FormValue("password")
 
 	if !validEmail.MatchString(email) || !validPassword.MatchString(password) || email != emailConfirm {
-		w.Redirect(backlink + "/configure?error=invalid")
+		w.Redirect(subdir + "/configure?error=invalid")
 		return
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		w.Redirect(backlink + "/forgot?error=bcrypt")
+		w.Redirect(subdir + "/forgot?error=bcrypt")
 		return
 	}
 	config.UpdateInfo(func(i *Info) error {
@@ -154,7 +154,7 @@ func configureHandler(w *Web) {
 		Error(w.w, err)
 		return
 	}
-	w.Redirect(backlink + "/settings?success=configured")
+	w.Redirect(subdir + "/settings?success=configured")
 }
 
 func forgotHandler(w *Web) {
@@ -168,20 +168,20 @@ func forgotHandler(w *Web) {
 	password := w.r.FormValue("password")
 
 	if email != "" && !validEmail.MatchString(email) {
-		w.Redirect(backlink + "/forgot?error=invalid")
+		w.Redirect(subdir + "/forgot?error=invalid")
 		return
 	}
 	if secret != "" && !validString.MatchString(secret) {
-		w.Redirect(backlink + "/forgot?error=invalid")
+		w.Redirect(subdir + "/forgot?error=invalid")
 		return
 	}
 	if email != "" && secret != "" && !validPassword.MatchString(password) {
-		w.Redirect(backlink + "/forgot?error=invalid&email=%s&secret=%s", email, secret)
+		w.Redirect(subdir+"/forgot?error=invalid&email=%s&secret=%s", email, secret)
 		return
 	}
 
 	if email != config.FindInfo().Email {
-		w.Redirect(backlink + "/forgot?error=invalid")
+		w.Redirect(subdir + "/forgot?error=invalid")
 		return
 	}
 
@@ -203,18 +203,18 @@ func forgotHandler(w *Web) {
 			}
 		}()
 
-		w.Redirect(backlink + "/forgot?success=forgot")
+		w.Redirect(subdir + "/forgot?success=forgot")
 		return
 	}
 
 	if secret != config.FindInfo().Secret {
-		w.Redirect(backlink + "/forgot?error=invalid")
+		w.Redirect(subdir + "/forgot?error=invalid")
 		return
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		w.Redirect(backlink + "/forgot?error=bcrypt")
+		w.Redirect(subdir + "/forgot?error=bcrypt")
 		return
 	}
 	config.UpdateInfo(func(i *Info) error {
@@ -227,12 +227,12 @@ func forgotHandler(w *Web) {
 		Error(w.w, err)
 		return
 	}
-	w.Redirect(backlink)
+	w.Redirect(subdir)
 }
 
 func signoutHandler(w *Web) {
 	w.SignoutSession()
-	w.Redirect(backlink + "/signin")
+	w.Redirect(subdir + "/signin")
 }
 
 func signinHandler(w *Web) {
@@ -246,18 +246,18 @@ func signinHandler(w *Web) {
 	passcode := w.r.FormValue("totp")
 
 	if email != config.FindInfo().Email {
-		w.Redirect(backlink + "/signin?error=invalid")
+		w.Redirect(subdir + "/signin?error=invalid")
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword(config.FindInfo().Password, []byte(password)); err != nil {
-		w.Redirect(backlink + "/signin?error=invalid")
+		w.Redirect(subdir + "/signin?error=invalid")
 		return
 	}
 
 	if config.FindInfo().TotpKey != "" && !totp.Validate(passcode, config.FindInfo().TotpKey) {
 		// Totp has been configured and the provided code doesn't match
-		w.Redirect(backlink + "/signin?error=invalid")
+		w.Redirect(subdir + "/signin?error=invalid")
 		return
 	}
 
@@ -266,7 +266,7 @@ func signinHandler(w *Web) {
 		return
 	}
 
-	w.Redirect(backlink)
+	w.Redirect(subdir)
 }
 
 func totpQRHandler(w *Web) {
@@ -277,7 +277,7 @@ func totpQRHandler(w *Web) {
 
 	if config.Info.TotpKey != "" {
 		// TOTP is already configured, don't allow the current one to be leaked
-		w.Redirect(backlink + "/")
+		w.Redirect(subdir + "/")
 		return
 	}
 
@@ -322,7 +322,7 @@ func userEditHandler(w *Web) {
 	}
 
 	if w.User.ID == user.ID {
-		w.Redirect(backlink + "/user/edit/%s", user.ID)
+		w.Redirect(subdir+"/user/edit/%s", user.ID)
 		return
 	}
 
@@ -333,7 +333,7 @@ func userEditHandler(w *Web) {
 		return nil
 	})
 
-	w.Redirect(backlink + "/user/edit/%s?success=edituser", user.ID)
+	w.Redirect(subdir+"/user/edit/%s?success=edituser", user.ID)
 }
 
 func userDeleteHandler(w *Web) {
@@ -351,7 +351,7 @@ func userDeleteHandler(w *Web) {
 		return
 	}
 	if w.User.ID == user.ID {
-		w.Redirect(backlink + "/user/edit/%s?error=deleteuser", user.ID)
+		w.Redirect(subdir+"/user/edit/%s?error=deleteuser", user.ID)
 		return
 	}
 
@@ -364,7 +364,7 @@ func userDeleteHandler(w *Web) {
 	for _, profile := range config.ListProfilesByUser(user.ID) {
 		if err := deleteProfile(profile); err != nil {
 			logger.Errorf("delete profile failed: %s", err)
-			w.Redirect(backlink + "/profile/delete?error=deleteprofile")
+			w.Redirect(subdir + "/profile/delete?error=deleteprofile")
 			return
 		}
 	}
@@ -373,7 +373,7 @@ func userDeleteHandler(w *Web) {
 		Error(w.w, err)
 		return
 	}
-	w.Redirect(backlink + "?success=deleteuser")
+	w.Redirect(subdir + "?success=deleteuser")
 }
 
 func profileAddHandler(w *Web) {
@@ -391,7 +391,7 @@ func profileAddHandler(w *Web) {
 	}
 
 	if name == "" {
-		w.Redirect(backlink + "?error=profilename")
+		w.Redirect(subdir + "?error=profilename")
 		return
 	}
 
@@ -403,14 +403,14 @@ func profileAddHandler(w *Web) {
 	}
 
 	if len(config.ListProfiles()) >= maxProfiles {
-		w.Redirect(backlink + "?error=addprofile")
+		w.Redirect(subdir + "?error=addprofile")
 		return
 	}
 
 	profile, err := config.AddProfile(userID, name, platform)
 	if err != nil {
 		logger.Warn(err)
-		w.Redirect(backlink + "?error=addprofile")
+		w.Redirect(subdir + "?error=addprofile")
 		return
 	}
 
@@ -527,11 +527,11 @@ WGCLIENT
 		f, _ := os.Create("/tmp/error.txt")
 		errstr := fmt.Sprintln(err)
 		f.WriteString(errstr)
-		w.Redirect(backlink + "?error=addprofile")
+		w.Redirect(subdir + "?error=addprofile")
 		return
 	}
 
-	w.Redirect(backlink + "/profile/connect/%s?success=addprofile", profile.ID)
+	w.Redirect(subdir+"/profile/connect/%s?success=addprofile", profile.ID)
 }
 
 func profileConnectHandler(w *Web) {
@@ -570,18 +570,18 @@ func profileDeleteHandler(w *Web) {
 	}
 	if err := deleteProfile(profile); err != nil {
 		logger.Errorf("delete profile failed: %s", err)
-		w.Redirect(backlink + "/profile/delete?error=deleteprofile")
+		w.Redirect(subdir + "/profile/delete?error=deleteprofile")
 		return
 	}
 	if len(profile.UserID) > 0 && w.Admin {
-		w.Redirect(backlink + "/user/edit/%s?success=deleteprofile", profile.UserID)
+		w.Redirect(subdir+"/user/edit/%s?success=deleteprofile", profile.UserID)
 		return
 	}
-	w.Redirect(backlink + "?success=deleteprofile")
+	w.Redirect(subdir + "?success=deleteprofile")
 }
 
 func indexHandler(w *Web) {
-	w.Redirect(backlink)
+	w.Redirect(subdir)
 }
 
 func rootIndexHandler(w *Web) {
@@ -627,7 +627,7 @@ func settingsHandler(w *Web) {
 	if len(samlMetadata) > 0 {
 		if err := configureSAML(); err != nil {
 			logger.Warnf("configuring SAML failed: %s", err)
-			w.Redirect(backlink + "/settings?error=saml")
+			w.Redirect(subdir + "/settings?error=saml")
 		}
 	} else {
 		samlSP = nil
@@ -635,18 +635,18 @@ func settingsHandler(w *Web) {
 
 	if currentPassword != "" || newPassword != "" {
 		if !validPassword.MatchString(newPassword) {
-			w.Redirect(backlink + "/settings?error=invalid")
+			w.Redirect(subdir + "/settings?error=invalid")
 			return
 		}
 
 		if err := bcrypt.CompareHashAndPassword(config.FindInfo().Password, []byte(currentPassword)); err != nil {
-			w.Redirect(backlink + "/settings?error=invalid")
+			w.Redirect(subdir + "/settings?error=invalid")
 			return
 		}
 
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
 		if err != nil {
-			w.Redirect(backlink + "/settings?error=bcrypt")
+			w.Redirect(subdir + "/settings?error=bcrypt")
 			return
 		}
 
@@ -659,24 +659,24 @@ func settingsHandler(w *Web) {
 	if resetTotp == "true" {
 		err := config.ResetTotp()
 		if err != nil {
-			w.Redirect(backlink + "/settings?error=totp")
+			w.Redirect(subdir + "/settings?error=totp")
 			return
 		}
 
-		w.Redirect(backlink + "/settings?success=totp")
+		w.Redirect(subdir + "/settings?success=totp")
 		return
 	}
 
 	if config.Info.TotpKey == "" && totpCode != "" {
 		if !totp.Validate(totpCode, tempTotpKey.Secret()) {
-			w.Redirect(backlink + "/settings?error=totp")
+			w.Redirect(subdir + "/settings?error=totp")
 			return
 		}
 		config.Info.TotpKey = tempTotpKey.Secret()
 		config.save()
 	}
 
-	w.Redirect(backlink + "/settings?success=settings")
+	w.Redirect(subdir + "/settings?success=settings")
 }
 
 func helpHandler(w *Web) {

@@ -40,7 +40,7 @@
 
                 {{$email := $.Request.FormValue "email"}}
                 {{$secret := $.Request.FormValue "secret"}}
-                <form class="ui huge form" action="{{$.Backlink}}/forgot" method="POST" novalidate autocomplete="off">
+                <form class="ui huge form" action="{{$.SubDirectory}}/forgot" method="POST" novalidate autocomplete="off">
                     {{if and $email $secret}}
                         <input type="hidden" name="email" value="{{$email}}">
                         <input type="hidden" name="secret" value="{{$secret}}">

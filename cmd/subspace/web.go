@@ -41,14 +41,14 @@ type Web struct {
 	template string
 
 	// Default
-	Backlink string
-	Version  string
-	Request  *http.Request
-	Section  string
-	Time     time.Time
-	Info     Info
-	Admin    bool
-	SAML     *samlsp.Middleware
+	SubDirectory string
+	Version      string
+	Request      *http.Request
+	Section      string
+	Time         time.Time
+	Info         Info
+	Admin        bool
+	SAML         *samlsp.Middleware
 
 	User     User
 	Users    []User
@@ -153,7 +153,7 @@ func WebHandler(h func(*Web), section string) httprouter.Handle {
 			ps:       ps,
 			template: section + ".html",
 
-			Backlink:      backlink,
+			SubDirectory:  subdir,
 			Time:          time.Now(),
 			Version:       version,
 			Request:       r,
@@ -165,7 +165,7 @@ func WebHandler(h func(*Web), section string) httprouter.Handle {
 		}
 
 		if !config.FindInfo().Configured {
-			web.Redirect(backlink + "/configure")
+			web.Redirect(subdir + "/configure")
 			return
 		}
 
@@ -243,7 +243,7 @@ func WebHandler(h func(*Web), section string) httprouter.Handle {
 		}
 
 		logger.Warnf("auth: sign in required")
-		web.Redirect(backlink + "/signin")
+		web.Redirect(subdir + "/signin")
 	}
 }
 
@@ -304,7 +304,7 @@ func (w *Web) SignoutSession() {
 		http.SetCookie(w.w, &http.Cookie{
 			Name:     SessionCookieNameSSO,
 			Value:    "",
-			Path:     backlink,
+			Path:     subdir,
 			HttpOnly: true,
 			Domain:   httpHost,
 			Secure:   !httpInsecure,
@@ -315,7 +315,7 @@ func (w *Web) SignoutSession() {
 	http.SetCookie(w.w, &http.Cookie{
 		Name:     SessionCookieName,
 		Value:    "",
-		Path:     backlink,
+		Path:     subdir,
 		HttpOnly: true,
 		Domain:   httpHost,
 		Secure:   !httpInsecure,
@@ -339,7 +339,7 @@ func (w *Web) SigninSession(admin bool, userID string) error {
 	http.SetCookie(w.w, &http.Cookie{
 		Name:     SessionCookieName,
 		Value:    encoded,
-		Path:     backlink,
+		Path:     subdir,
 		HttpOnly: true,
 		Domain:   httpHost,
 		Secure:   !httpInsecure,

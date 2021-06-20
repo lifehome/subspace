@@ -170,41 +170,41 @@ func main() {
 	r := &httprouter.Router{}
 
 	r.GET(subdir, Log(WebHandler(rootIndexHandler, "index")))
-	r.GET(subdir+"/", Log(WebHandler(indexHandler, "index")))
-	r.GET(subdir+"/help", Log(WebHandler(helpHandler, "help")))
-	r.GET(subdir+"/configure", Log(WebHandler(configureHandler, "configure")))
-	r.POST(subdir+"/configure", Log(WebHandler(configureHandler, "configure")))
+	r.GET(subdir + "/", Log(WebHandler(indexHandler, "index")))
+	r.GET(subdir + "/help", Log(WebHandler(helpHandler, "help")))
+	r.GET(subdir + "/configure", Log(WebHandler(configureHandler, "configure")))
+	r.POST(subdir + "/configure", Log(WebHandler(configureHandler, "configure")))
 
 	// SAML
-	r.GET(subdir+"/sso", Log(ssoHandler))
-	r.GET(subdir+"/saml/metadata", Log(samlHandler))
-	r.POST(subdir+"/saml/metadata", Log(samlHandler))
-	r.GET(subdir+"/saml/acs", Log(samlHandler))
-	r.POST(subdir+"/saml/acs", Log(samlHandler))
+	r.GET(subdir + "/sso", Log(ssoHandler))
+	r.GET(subdir + "/saml/metadata", Log(samlHandler))
+	r.POST(subdir + "/saml/metadata", Log(samlHandler))
+	r.GET(subdir + "/saml/acs", Log(samlHandler))
+	r.POST(subdir + "/saml/acs", Log(samlHandler))
 
-	r.GET(subdir+"/totp/image", Log(WebHandler(totpQRHandler, "totp/image")))
-	r.GET(subdir+"/signin", Log(WebHandler(signinHandler, "signin")))
-	r.GET(subdir+"/signout", Log(WebHandler(signoutHandler, "signout")))
-	r.POST(subdir+"/signin", Log(WebHandler(signinHandler, "signin")))
-	r.GET(subdir+"/forgot", Log(WebHandler(forgotHandler, "forgot")))
-	r.POST(subdir+"/forgot", Log(WebHandler(forgotHandler, "forgot")))
+	r.GET(subdir + "/totp/image", Log(WebHandler(totpQRHandler, "totp/image")))
+	r.GET(subdir + "/signin", Log(WebHandler(signinHandler, "signin")))
+	r.GET(subdir + "/signout", Log(WebHandler(signoutHandler, "signout")))
+	r.POST(subdir + "/signin", Log(WebHandler(signinHandler, "signin")))
+	r.GET(subdir + "/forgot", Log(WebHandler(forgotHandler, "forgot")))
+	r.POST(subdir + "/forgot", Log(WebHandler(forgotHandler, "forgot")))
 
-	r.GET(subdir+"/settings", Log(WebHandler(settingsHandler, "settings")))
-	r.POST(subdir+"/settings", Log(WebHandler(settingsHandler, "settings")))
+	r.GET(subdir + "/settings", Log(WebHandler(settingsHandler, "settings")))
+	r.POST(subdir + "/settings", Log(WebHandler(settingsHandler, "settings")))
 
-	r.GET(subdir+"/user/edit/:user", Log(WebHandler(userEditHandler, "user/edit")))
-	r.POST(subdir+"/user/edit", Log(WebHandler(userEditHandler, "user/edit")))
-	r.GET(subdir+"/user/delete/:user", Log(WebHandler(userDeleteHandler, "user/delete")))
-	r.POST(subdir+"/user/delete", Log(WebHandler(userDeleteHandler, "user/delete")))
+	r.GET(subdir + "/user/edit/:user", Log(WebHandler(userEditHandler, "user/edit")))
+	r.POST(subdir + "/user/edit", Log(WebHandler(userEditHandler, "user/edit")))
+	r.GET(subdir + "/user/delete/:user", Log(WebHandler(userDeleteHandler, "user/delete")))
+	r.POST(subdir + "/user/delete", Log(WebHandler(userDeleteHandler, "user/delete")))
 
-	r.GET(subdir+"/profile/add", Log(WebHandler(profileAddHandler, "profile/add")))
-	r.POST(subdir+"/profile/add", Log(WebHandler(profileAddHandler, "profile/add")))
-	r.GET(subdir+"/profile/connect/:profile", Log(WebHandler(profileConnectHandler, "profile/connect")))
-	r.GET(subdir+"/profile/delete/:profile", Log(WebHandler(profileDeleteHandler, "profile/delete")))
-	r.POST(subdir+"/profile/delete", Log(WebHandler(profileDeleteHandler, "profile/delete")))
-	r.GET(subdir+"/profile/config/wireguard/:profile", Log(WebHandler(wireguardConfigHandler, "profile/config/wireguard")))
-	r.GET(subdir+"/profile/qrconfig/wireguard/:profile", Log(WebHandler(wireguardQRConfigHandler, "profile/qrconfig/wireguard")))
-	r.GET(subdir+"/static/*path", staticHandler)
+	r.GET(subdir + "/profile/add", Log(WebHandler(profileAddHandler, "profile/add")))
+	r.POST(subdir + "/profile/add", Log(WebHandler(profileAddHandler, "profile/add")))
+	r.GET(subdir + "/profile/connect/:profile", Log(WebHandler(profileConnectHandler, "profile/connect")))
+	r.GET(subdir + "/profile/delete/:profile", Log(WebHandler(profileDeleteHandler, "profile/delete")))
+	r.POST(subdir + "/profile/delete", Log(WebHandler(profileDeleteHandler, "profile/delete")))
+	r.GET(subdir + "/profile/config/wireguard/:profile", Log(WebHandler(wireguardConfigHandler, "profile/config/wireguard")))
+	r.GET(subdir + "/profile/qrconfig/wireguard/:profile", Log(WebHandler(wireguardQRConfigHandler, "profile/qrconfig/wireguard")))
+	r.GET(subdir + "/static/*path", staticHandler)
 
 	//
 	// Server
@@ -258,7 +258,7 @@ func main() {
 	// http redirect to https and Let's Encrypt auth
 	go func() {
 		redir := httprouter.New()
-		redir.GET(subdir+"/*path", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		redir.GET(subdir + "/*path", func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 			r.URL.Scheme = "https"
 			r.URL.Host = httpHost
 			http.Redirect(w, r, r.URL.String(), http.StatusFound)

@@ -324,7 +324,7 @@ func main() {
 	logger.Infof("Subspace version: %s %s", version, &url.URL{
 		Scheme: "https",
 		Host:   hostport,
-		Path:   backlink + "/",
+		Path:   backlink,
 	})
 	logger.Fatal(httpsd.Serve(tlsListener))
 }

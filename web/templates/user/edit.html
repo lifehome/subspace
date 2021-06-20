@@ -1,7 +1,7 @@
 {{template "header.html" .}}
 
 <div class="ui container">
-    <a href="{{.Backlink}}/" class="ui large basic button"><i class="long arrow alternate left icon"></i>Back</a>
+    <a href="{{$.Backlink}}/" class="ui large basic button"><i class="long arrow alternate left icon"></i>Back</a>
     <div class="ui hidden divider"></div>
 
     <div class="ui padded segment">
@@ -14,7 +14,7 @@
             <div class="ui three stackable cards">
                 {{range $n, $p := $.Profiles}}
                     <div class="showcard card">
-                        <a href="{{.Backlink}}/profile/delete/{{$p.ID}}" class="ui right corner label "><i class="trash alternate icon"></i></a>
+                        <a href="{{$.Backlink}}/profile/delete/{{$p.ID}}" class="ui right corner label "><i class="trash alternate icon"></i></a>
                         <div class="content">
                             <div class="header">
                                 <i class="large grey
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="extra content">
-                            <a href="{{.Backlink}}/profile/connect/{{$p.ID}}" class="ui large basic fluid button">Connect device</a>
+                            <a href="{{$.Backlink}}/profile/connect/{{$p.ID}}" class="ui large basic fluid button">Connect device</a>
                         </div>
                     </div>
                 {{end}}
@@ -66,7 +66,7 @@
 
         <div class="ui equal width grid">
             <div class="column">
-                <form class="ui large form" method="POST" action="{{.Backlink}}/user/edit">
+                <form class="ui large form" method="POST" action="{{$.Backlink}}/user/edit">
                     <input type="hidden" name="user" value="{{$.TargetUser.ID}}">
                     <div class="equal width fields">
                         <div class="field left-aligned">
@@ -77,7 +77,7 @@
                             {{end}}
                         </div>
                         <div class="field right-aligned">
-                            <a href="{{.Backlink}}/user/delete/{{$.TargetUser.ID}}" class="ui large basic button">Delete</a>
+                            <a href="{{$.Backlink}}/user/delete/{{$.TargetUser.ID}}" class="ui large basic button">Delete</a>
                         </div>
                     </div>
                 </form>

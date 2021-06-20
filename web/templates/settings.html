@@ -55,11 +55,11 @@
 
             <div class="field">
                 <div class="ui small header">Your ACS URL</div>
-                <input class="readonly-input" type="text" value="https://{{$.Request.Host}}/saml/acs" readonly>
+                <input class="readonly-input" type="text" value="https://{{$.Request.Host}}{{$.Backlink}}/saml/acs" readonly>
             </div>
             <div class="field">
                 <div class="ui small header">Your Entity ID</div>
-                <input class="readonly-input" type="text" value="https://{{$.Request.Host}}/saml/metadata" readonly>
+                <input class="readonly-input" type="text" value="https://{{$.Request.Host}}{{$.Backlink}}/saml/metadata" readonly>
             </div>
             <div class="field">
                 <div class="ui small header">IDP Metadata</div>

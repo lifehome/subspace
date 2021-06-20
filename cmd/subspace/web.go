@@ -304,7 +304,7 @@ func (w *Web) SignoutSession() {
 		http.SetCookie(w.w, &http.Cookie{
 			Name:     SessionCookieNameSSO,
 			Value:    "",
-			Path:     backlink + "/",
+			Path:     backlink,
 			HttpOnly: true,
 			Domain:   httpHost,
 			Secure:   !httpInsecure,
@@ -315,7 +315,7 @@ func (w *Web) SignoutSession() {
 	http.SetCookie(w.w, &http.Cookie{
 		Name:     SessionCookieName,
 		Value:    "",
-		Path:     backlink + "/",
+		Path:     backlink,
 		HttpOnly: true,
 		Domain:   httpHost,
 		Secure:   !httpInsecure,
@@ -339,7 +339,7 @@ func (w *Web) SigninSession(admin bool, userID string) error {
 	http.SetCookie(w.w, &http.Cookie{
 		Name:     SessionCookieName,
 		Value:    encoded,
-		Path:     backlink + "/",
+		Path:     backlink,
 		HttpOnly: true,
 		Domain:   httpHost,
 		Secure:   !httpInsecure,

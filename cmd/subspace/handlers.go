@@ -120,7 +120,7 @@ func wireguardConfigHandler(w *Web) {
 
 func configureHandler(w *Web) {
 	if config.FindInfo().Configured {
-		w.Redirect(backlink + "/?error=configured")
+		w.Redirect(backlink + "?error=configured")
 		return
 	}
 
@@ -176,7 +176,7 @@ func forgotHandler(w *Web) {
 		return
 	}
 	if email != "" && secret != "" && !validPassword.MatchString(password) {
-		w.Redirect(backlink + "/forgot?error=invalid&email=%s&secret=%s", email, secret)
+		w.Redirect(backlink+"/forgot?error=invalid&email=%s&secret=%s", email, secret)
 		return
 	}
 
@@ -322,7 +322,7 @@ func userEditHandler(w *Web) {
 	}
 
 	if w.User.ID == user.ID {
-		w.Redirect(backlink + "/user/edit/%s", user.ID)
+		w.Redirect(backlink+"/user/edit/%s", user.ID)
 		return
 	}
 
@@ -333,7 +333,7 @@ func userEditHandler(w *Web) {
 		return nil
 	})
 
-	w.Redirect(backlink + "/user/edit/%s?success=edituser", user.ID)
+	w.Redirect(backlink+"/user/edit/%s?success=edituser", user.ID)
 }
 
 func userDeleteHandler(w *Web) {
@@ -351,7 +351,7 @@ func userDeleteHandler(w *Web) {
 		return
 	}
 	if w.User.ID == user.ID {
-		w.Redirect(backlink + "/user/edit/%s?error=deleteuser", user.ID)
+		w.Redirect(backlink+"/user/edit/%s?error=deleteuser", user.ID)
 		return
 	}
 
@@ -373,7 +373,7 @@ func userDeleteHandler(w *Web) {
 		Error(w.w, err)
 		return
 	}
-	w.Redirect(backlink + "/?success=deleteuser")
+	w.Redirect(backlink + "?success=deleteuser")
 }
 
 func profileAddHandler(w *Web) {
@@ -391,7 +391,7 @@ func profileAddHandler(w *Web) {
 	}
 
 	if name == "" {
-		w.Redirect(backlink + "/?error=profilename")
+		w.Redirect(backlink + "?error=profilename")
 		return
 	}
 
@@ -403,14 +403,14 @@ func profileAddHandler(w *Web) {
 	}
 
 	if len(config.ListProfiles()) >= maxProfiles {
-		w.Redirect(backlink + "/?error=addprofile")
+		w.Redirect(backlink + "?error=addprofile")
 		return
 	}
 
 	profile, err := config.AddProfile(userID, name, platform)
 	if err != nil {
 		logger.Warn(err)
-		w.Redirect(backlink + "/?error=addprofile")
+		w.Redirect(backlink + "?error=addprofile")
 		return
 	}
 
@@ -527,11 +527,11 @@ WGCLIENT
 		f, _ := os.Create("/tmp/error.txt")
 		errstr := fmt.Sprintln(err)
 		f.WriteString(errstr)
-		w.Redirect(backlink + "/?error=addprofile")
+		w.Redirect(backlink + "?error=addprofile")
 		return
 	}
 
-	w.Redirect(backlink + "/profile/connect/%s?success=addprofile", profile.ID)
+	w.Redirect(backlink+"/profile/connect/%s?success=addprofile", profile.ID)
 }
 
 func profileConnectHandler(w *Web) {
@@ -574,10 +574,10 @@ func profileDeleteHandler(w *Web) {
 		return
 	}
 	if len(profile.UserID) > 0 && w.Admin {
-		w.Redirect(backlink + "/user/edit/%s?success=deleteprofile", profile.UserID)
+		w.Redirect(backlink+"/user/edit/%s?success=deleteprofile", profile.UserID)
 		return
 	}
-	w.Redirect(backlink + "/?success=deleteprofile")
+	w.Redirect(backlink + "?success=deleteprofile")
 }
 
 func indexHandler(w *Web) {

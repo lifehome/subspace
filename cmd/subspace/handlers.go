@@ -176,7 +176,7 @@ func forgotHandler(w *Web) {
 		return
 	}
 	if email != "" && secret != "" && !validPassword.MatchString(password) {
-		w.Redirect(backlink+"/forgot?error=invalid&email=%s&secret=%s", email, secret)
+		w.Redirect(backlink + "/forgot?error=invalid&email=%s&secret=%s", email, secret)
 		return
 	}
 
@@ -322,7 +322,7 @@ func userEditHandler(w *Web) {
 	}
 
 	if w.User.ID == user.ID {
-		w.Redirect(backlink+"/user/edit/%s", user.ID)
+		w.Redirect(backlink + "/user/edit/%s", user.ID)
 		return
 	}
 
@@ -333,7 +333,7 @@ func userEditHandler(w *Web) {
 		return nil
 	})
 
-	w.Redirect(backlink+"/user/edit/%s?success=edituser", user.ID)
+	w.Redirect(backlink + "/user/edit/%s?success=edituser", user.ID)
 }
 
 func userDeleteHandler(w *Web) {
@@ -351,7 +351,7 @@ func userDeleteHandler(w *Web) {
 		return
 	}
 	if w.User.ID == user.ID {
-		w.Redirect(backlink+"/user/edit/%s?error=deleteuser", user.ID)
+		w.Redirect(backlink + "/user/edit/%s?error=deleteuser", user.ID)
 		return
 	}
 
@@ -531,7 +531,7 @@ WGCLIENT
 		return
 	}
 
-	w.Redirect(backlink+"/profile/connect/%s?success=addprofile", profile.ID)
+	w.Redirect(backlink + "/profile/connect/%s?success=addprofile", profile.ID)
 }
 
 func profileConnectHandler(w *Web) {
@@ -574,7 +574,7 @@ func profileDeleteHandler(w *Web) {
 		return
 	}
 	if len(profile.UserID) > 0 && w.Admin {
-		w.Redirect(backlink+"/user/edit/%s?success=deleteprofile", profile.UserID)
+		w.Redirect(backlink + "/user/edit/%s?success=deleteprofile", profile.UserID)
 		return
 	}
 	w.Redirect(backlink + "?success=deleteprofile")

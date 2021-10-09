@@ -89,7 +89,7 @@ var (
 func init() {
 	cli.StringVar(&datadir, "datadir", "/data", "data dir")
 	cli.StringVar(&backlink, "backlink", "", "[deprecated] backlink (optional)")
-	cli.StringVar(&subdir, "subdir", "", "[optional] URL path(without hostname) to subspace instance, without trailing slash")
+	cli.StringVar(&subdir, "subdir", "", "[optional] pathname prefix for subspace, without trailing slash")
 	cli.StringVar(&httpHost, "http-host", "", "HTTP host")
 	cli.StringVar(&httpAddr, "http-addr", ":80", "HTTP listen address")
 	cli.BoolVar(&httpInsecure, "http-insecure", false, "enable sessions cookies for http (no https) not recommended")

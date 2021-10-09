@@ -127,7 +127,7 @@ func main() {
 		subdir = backlink
 		logger.Warnf("You are using a deprecated flag `backlink`, and it will be removed in a future release.\nPlease kindly change the flag to `subdir` to avoid your installation being broken in future updates.")
 		
-		// sleep for 10 seconds before continue initializing
+		// sleep for 90 seconds before continue initializing
 		logger.Error("[WARNING] Deprecated flag `backlink` detected, giving a 90 seconds startup delay...")
 		time.Sleep(90 * time.Second)
 	}

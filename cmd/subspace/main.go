@@ -47,6 +47,7 @@ var (
 
 	// subdir
 	subdir string
+	backlink string
 
 	// show version
 	showVersion bool
@@ -87,6 +88,7 @@ var (
 
 func init() {
 	cli.StringVar(&datadir, "datadir", "/data", "data dir")
+	cli.StringVar(&backlink, "backlink", "", "[deprecated] Please use `--subdir` for directory path prefix to the subspace instance.")
 	cli.StringVar(&subdir, "subdir", "", "[optional] URL path(without hostname) to subspace instance, without trailing slash")
 	cli.StringVar(&httpHost, "http-host", "", "HTTP host")
 	cli.StringVar(&httpAddr, "http-addr", ":80", "HTTP listen address")
@@ -118,6 +120,16 @@ func main() {
 	if showVersion {
 		fmt.Printf("Subspace %s\n", version)
 		os.Exit(0)
+	}
+
+	// show warning message if deprecated flags are used
+	if backlink != "" {
+		subdir = backlink
+		logger.Warnf("You are using a deprecated flag `backlink`, and it will be removed in a future release.\nPlease kindly change the flag to `subdir` to avoid your installation being broken in future updates.")
+		
+		// sleep for 10 seconds before continue initializing
+		logger.Error("[WARNING] Deprecated flag `backlink` detected, giving a 90 seconds startup delay...")
+		time.Sleep(90 * time.Second)
 	}
 
 	// http host

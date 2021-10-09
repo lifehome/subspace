@@ -164,12 +164,13 @@ func WebHandler(h func(*Web), section string) httprouter.Handle {
 			TempTotpKey:   tempTotpKey,
 		}
 
-		if !config.FindInfo().Configured {
-			web.Redirect(subdir + "/configure")
-			return
-		}
-
 		if section == "signin" || section == "forgot" || section == "configure" {
+			// check if it is authentication stage but instance is not configured
+			if (section == "signin" || section == "forgot") && !config.FindInfo().Configured {
+				web.Redirect(subdir + "/configure")
+				return
+			}
+
 			h(web)
 			return
 		}

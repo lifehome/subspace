@@ -182,7 +182,6 @@ func main() {
 	//
 	r := &httprouter.Router{}
 
-	r.GET(subdir, Log(WebHandler(rootIndexHandler, "index")))
 	r.GET(subdir + "/", Log(WebHandler(indexHandler, "index")))
 	r.GET(subdir + "/help", Log(WebHandler(helpHandler, "help")))
 	r.GET(subdir + "/configure", Log(WebHandler(configureHandler, "configure")))

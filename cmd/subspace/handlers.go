@@ -581,10 +581,6 @@ func profileDeleteHandler(w *Web) {
 }
 
 func indexHandler(w *Web) {
-	w.Redirect(subdir)
-}
-
-func rootIndexHandler(w *Web) {
 	if w.User.ID != "" {
 		w.TargetProfiles = config.ListProfilesByUser(w.User.ID)
 	}

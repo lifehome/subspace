@@ -9,6 +9,12 @@ if [ -z "${SUBSPACE_HTTP_HOST-}" ]; then
   echo "Environment variable SUBSPACE_HTTP_HOST required. Exiting."
   exit 1
 fi
+
+# Configuring depreacted flags for backward compatibility
+if [ -z "${SUBSPACE_BACKLINK-}" ]; then
+  export SUBSPACE_BACKLINK="/"
+fi
+
 # Optional environment variables.
 if [ -z "${SUBSPACE_URL_SUBDIRECTORY-}" ]; then
   export SUBSPACE_URL_SUBDIRECTORY=""
@@ -240,6 +246,7 @@ exec /usr/bin/subspace \
     "--http-host=${SUBSPACE_HTTP_HOST}" \
     "--http-addr=${SUBSPACE_HTTP_ADDR}" \
     "--http-insecure=${SUBSPACE_HTTP_INSECURE}" \
+    "--backlink=${SUBSPACE_BACKLINK}" \
     "--subdir=${SUBSPACE_URL_SUBDIRECTORY}" \
     "--letsencrypt=${SUBSPACE_LETSENCRYPT}" \
     "--theme=${SUBSPACE_THEME}"
